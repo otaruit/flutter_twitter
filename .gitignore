@@ -1,3 +1,6 @@
+# api keys
+firebase_options.dart
+
 # Miscellaneous
 *.class
 *.log

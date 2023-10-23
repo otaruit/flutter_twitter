@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "746937972189",
+    "project_id": "twitter-dev-7a99c",
+    "storage_bucket": "twitter-dev-7a99c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746937972189:android:7f6cf55dadeb6f03347234",
+        "android_client_info": {
+          "package_name": "com.example.flutter_twitter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHJb73oS--2hvTbf0iZH4Ty7MsoGyKOdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

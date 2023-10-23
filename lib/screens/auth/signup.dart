@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_twitter/services/auth.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -11,35 +12,37 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  void signUpAction() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
-  void signInAction() async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  // void signUpAction() async {
+  //   try {
+  //     UserCredential userCredential = await FirebaseAuth.instance
+  //         .createUserWithEmailAndPassword(
+  //             email: email, password: password);
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'weak-password') {
+  //       print('The password provided is too weak.');
+  //     } else if (e.code == 'email-already-in-use') {
+  //       print('The account already exists for that email.');
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+  // void signInAction() async {
+  //   try {
+  //     UserCredential userCredential = await FirebaseAuth.instance
+  //         .signInWithEmailAndPassword(email: email, password: password);
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'weak-password') {
+  //       print('The password provided is too weak.');
+  //     } else if (e.code == 'email-already-in-use') {
+  //       print('The account already exists for that email.');
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+
+  final AuthService _authService = AuthService();
 
   String email = '';
   String password = '';
@@ -68,10 +71,10 @@ class _SignUpState extends State<SignUp> {
               }),
             ),
             ElevatedButton(
-                onPressed: () async => {signUpAction()},
+                onPressed: () async => {_authService.signUp(email, password)},
                 child: const Text('Sign up')),
             ElevatedButton(
-                onPressed: () async => {signInAction()},
+                onPressed: () async => {_authService.signIn(email, password)},
                 child: const Text('Sign in'))
           ],
         )),

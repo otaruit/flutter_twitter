@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_twitter/models/usre.dart';
 
 class AuthService {
@@ -10,7 +9,7 @@ class AuthService {
     return user != null ? UserModel(id: user.uid) : null;
   }
 
-  Future signInAction(email, password) async {
+  Future signUp(email, password) async {
     try {
       User user = (await auth.createUserWithEmailAndPassword(
           email: email, password: password)) as User;

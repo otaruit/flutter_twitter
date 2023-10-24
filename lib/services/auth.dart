@@ -1,18 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_twitter/models/usre.dart';
+import 'package:flutter_twitter/models/user.dart';
 
 class AuthService {
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  UserModel? _userFromfirebaseUser(User user) {
+  UserModel? _userFromFirebaseUser(User user) {
     // ignore: unnecessary_null_comparison
     return user != null ? UserModel(id: user.uid) : null;
+  }
+
+  Stream<UserModel?> get user {
+    return auth.authStateChanges().map((user) => _userFromFirebaseUser(user!));
   }
 
   Future signUp(email, password) async {
     try {
       User user = (await auth.createUserWithEmailAndPassword(
           email: email, password: password)) as User;
+
+      _userFromFirebaseUser(user);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -32,6 +38,13 @@ class AuthService {
       print(e);
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future signOut() async {
+    try {} catch (e) {
+      print(e.toString());
+      return null;
     }
   }
 }

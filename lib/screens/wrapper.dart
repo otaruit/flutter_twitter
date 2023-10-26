@@ -9,7 +9,9 @@ class Wrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserModel>(context);
+    final user = Provider.of<UserModel?>(context);
+
+    print(user);
     // ignore: unnecessary_null_comparison
     if (user == null) {
       return const SignUp();

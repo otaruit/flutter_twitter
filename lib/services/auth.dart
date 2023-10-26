@@ -13,6 +13,8 @@ class AuthService {
     return auth.authStateChanges().map((user) => _userFromFirebaseUser(user!));
   }
 
+
+
   Future signUp(email, password) async {
     try {
       User user = (await auth.createUserWithEmailAndPassword(

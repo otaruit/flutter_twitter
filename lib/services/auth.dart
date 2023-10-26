@@ -4,23 +4,27 @@ import 'package:flutter_twitter/models/user.dart';
 class AuthService {
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  UserModel? _userFromFirebaseUser(User user) {
-    // ignore: unnecessary_null_comparison
-    return user != null ? UserModel(id: user.uid) : null;
+  UserModel? _userFromFirebaseUser(User? user) {
+    // null安全のために User? を受け入れるように変更
+    if (user != null) {
+      return UserModel(id: user.uid);
+    }
+    return null; // ユーザーがnullの場合はnullを返す
   }
 
   Stream<UserModel?> get user {
-    return auth.authStateChanges().map((user) => _userFromFirebaseUser(user!));
+    return auth.authStateChanges().map((user) => _userFromFirebaseUser(user));
   }
-
-
 
   Future signUp(email, password) async {
     try {
-      User user = (await auth.createUserWithEmailAndPassword(
-          email: email, password: password)) as User;
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User? user = userCredential.user;
 
-      _userFromFirebaseUser(user);
+      if (user != null) {
+        _userFromFirebaseUser(user);
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -34,8 +38,13 @@ class AuthService {
 
   Future signIn(email, password) async {
     try {
-      User user = (await auth.signInWithEmailAndPassword(
-          email: email, password: password)) as User;
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      User? user = userCredential.user;
+
+      if (user != null) {
+        _userFromFirebaseUser(user);
+      }
     } on FirebaseAuthException catch (e) {
       print(e);
     } catch (e) {
@@ -45,10 +54,9 @@ class AuthService {
 
   Future signOut() async {
     try {
-      return await auth.signOut();
+      await auth.signOut();
     } catch (e) {
       print(e.toString());
-      return null;
     }
   }
 }

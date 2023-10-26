@@ -23,6 +23,8 @@ class MyApp extends StatelessWidget {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

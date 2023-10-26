@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_twitter/services/auth.dart';
 
 class Home extends StatelessWidget {
@@ -16,12 +15,12 @@ class Home extends StatelessWidget {
           onPressed: () async {
             _authService.signOut();
           },
-          icon: Icon(
+          icon: const Icon(
             // <-- Icon
             Icons.person,
             size: 24.0,
           ),
-          label: Text('SignOut'), // <-- Text
+          label: const Text('SignOut'), // <-- Text
         ),
       ],
     ));

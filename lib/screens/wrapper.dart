@@ -1,7 +1,8 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_twitter/models/user.dart';
 import 'package:flutter_twitter/screens/auth/signup.dart';
 import 'package:flutter_twitter/screens/main/home.dart';
+import 'package:flutter_twitter/screens/main/posts/add.dart';
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
@@ -16,6 +17,14 @@ class Wrapper extends StatelessWidget {
     if (user == null) {
       return const SignUp();
     }
-    return const Home();
+
+    return MaterialApp(
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const Home(),
+        '/add': (context) => const Add()
+      },
+    );
+
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_twitter/models/user.dart';
 import 'package:flutter_twitter/screens/auth/signup.dart';
 import 'package:flutter_twitter/screens/main/home.dart';
 import 'package:flutter_twitter/screens/main/posts/add.dart';
+import 'package:flutter_twitter/screens/main/profile/edit.dart';
 import 'package:flutter_twitter/screens/main/profile/profile.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,7 @@ class Wrapper extends StatelessWidget {
         '/': (context) => const Home(),
         '/add': (context) => const Add(),
         '/profile': (context) => const Profile(),
+        '/edit': (context) => const Edit(),
       },
     );
 

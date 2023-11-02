@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_twitter/services/post.dart';
+import 'package:flutter_twitter/services/posts.dart';
 
 class Add extends StatefulWidget {
   const Add({super.key});

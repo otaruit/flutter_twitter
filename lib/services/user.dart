@@ -1,25 +1,23 @@
 import 'dart:collection';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_twitter/models/user.dart';
 import 'package:flutter_twitter/services/utils.dart';
 
+
 class UserService {
   UtilsService _utilsService = UtilsService();
 
-  UserModel _userFromFirebaseSnapshot(DocumentSnapshot snapshot) {
-    Map<String, dynamic> data = snapshot.data() as Map<String, dynamic>;
-
-    return snapshot != null
-        ? UserModel(
-            id: data['id'] ?? '',
-            profileImageUrl: data['profileImageUrl'],
-            name: data['name'] ?? '',
-            email: data['email'] ?? '',
-            bannerImageUrl: data['bannerImageUrl'] ?? '')
-        : null;
+  UserModel userFromFirebaseSnapshot(DocumentSnapshot snapshot) {
+    Map<String, dynamic>? data = snapshot.data() as Map<String, dynamic>?;
+    return UserModel(
+      id: snapshot.id,
+      name: data?['name'],
+      profileImageUrl: data?['profileImageUrl'],
+      bannerImageUrl: data?['bannerImageUrl'],
+      email: data?['email'],
+    );
   }
 
   Stream<UserModel> getUserInfo(uid, {required initialData}) {
@@ -27,7 +25,7 @@ class UserService {
         .collection("users")
         .doc(uid)
         .snapshots()
-        .map(_userFromFirebaseSnapshot);
+        .map(userFromFirebaseSnapshot);
   }
 
   Future<void> updateProfile(
@@ -37,14 +35,14 @@ class UserService {
 
     if (_bannerImage != null) {
       bannerImageUrl = await _utilsService.uploadFile(_bannerImage,
-          'user/profile/${FirebaseAuth.instance.currentUser?.uid}/banner.jpg');
+          'user/profile/${FirebaseAuth.instance.currentUser?.uid}/banner');
     }
-
     if (_profileImage != null) {
       profileImageUrl = await _utilsService.uploadFile(_profileImage,
-          'user/profile/${FirebaseAuth.instance.currentUser?.uid}/profile.jpg');
+          'user/profile/${FirebaseAuth.instance.currentUser?.uid}/profile');
     }
-    Map<String, Object> data = HashMap();
+
+    Map<String, Object> data = new HashMap();
     if (name != '') data['name'] = name;
     if (bannerImageUrl != '') data['bannerImageUrl'] = bannerImageUrl;
     if (profileImageUrl != '') data['profileImageUrl'] = profileImageUrl;

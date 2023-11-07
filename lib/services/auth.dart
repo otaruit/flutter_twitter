@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_twitter/models/user.dart';
+import 'package:flutter_twitter/services/user.dart';
 
 class AuthService {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -14,6 +15,17 @@ class AuthService {
             name: '',
             email: '')
         : null;
+  }
+
+  // UserServiceを使って_userFromFirebaseSnapshotメソッドを呼び出す
+  UserModel? _userFromFirebaseSnapshot(User? user) {
+    if (user != null) {
+      UserService _userService = UserService();
+      // UserServiceから_userFromFirebaseSnapshotを呼び出し、UserオブジェクトからUserModelを取得
+      return _userService
+          .userFromFirebaseSnapshot(user as DocumentSnapshot<Object?>);
+    }
+    return null;
   }
 
   Stream<UserModel?> get user {
@@ -33,7 +45,6 @@ class AuthService {
       if (user != null) {
         _userFromFirebaseUser(user);
       }
-      
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -47,9 +58,14 @@ class AuthService {
 
   Future signIn(email, password) async {
     try {
+      UserService _userService = UserService();
+
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
       User? user = userCredential.user;
+
+      // _userFromFirebaseSnapshotメソッドを使ってUserModelを取得
+      UserModel? userModel = _userFromFirebaseSnapshot(user);
 
       if (user != null) {
         _userFromFirebaseUser(user);

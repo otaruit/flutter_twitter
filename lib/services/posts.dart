@@ -23,7 +23,7 @@ class PostService {
     });
   }
 
-  Stream<List<PostModel>> getPostsByUser(uid) {
+  Stream<List<PostModel>> getPostsByUser(uid, {required initialData}) {
     return FirebaseFirestore.instance
         .collection("posts")
         .where('creator', isEqualTo: uid)

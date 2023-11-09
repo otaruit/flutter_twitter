@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_twitter/services/auth.dart';
+import 'package:provider/provider.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -46,6 +47,13 @@ class Home extends StatelessWidget {
           ],
         ),
       ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: [
+      //     BottomNavigationBarItem(icon: new Icon(Icons.home), label: 'home'),
+      //     BottomNavigationBarItem(
+      //         icon: new Icon(Icons.search), label: 'search')
+      //   ],
+      // )
     );
   }
 }

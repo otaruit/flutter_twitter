@@ -35,11 +35,13 @@ class UserService {
 
     if (_bannerImage != null) {
       bannerImageUrl = await _utilsService.uploadFile(_bannerImage,
-          'user/profile/${FirebaseAuth.instance.currentUser?.uid}/banner');
+          'user/profile/${FirebaseAuth.instance.currentUser?.uid}/banner',
+          'image/jpeg');
     }
     if (_profileImage != null) {
       profileImageUrl = await _utilsService.uploadFile(_profileImage,
-          'user/profile/${FirebaseAuth.instance.currentUser?.uid}/profile');
+          'user/profile/${FirebaseAuth.instance.currentUser?.uid}/profile',
+          'image/jpeg');
     }
 
     Map<String, Object> data = new HashMap();

@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_twitter/models/post.dart';
 import 'package:flutter_twitter/models/user.dart';
 import 'package:flutter_twitter/screens/main/posts/list.dart';
 import 'package:flutter_twitter/services/posts.dart';
@@ -18,11 +19,12 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   PostService _postService = PostService();
   UserService _userService = UserService();
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        StreamProvider.value(
+        StreamProvider<List<PostModel>>.value(
           value: _postService.getPostsByUser(
               FirebaseAuth.instance.currentUser?.uid,
               initialData: null),
@@ -35,13 +37,14 @@ class _ProfileState extends State<Profile> {
           initialData: const [],
         ),
       ],
-       
-        child: Scaffold(
+      child: Scaffold(
+          // body: Text(Provider.of<UserModel>(context).profileImageUrl),
           body: DefaultTabController(
         length: 2,
         child: NestedScrollView(
           headerSliverBuilder: (context, _) {
             return [
+        
               SliverAppBar(
                 floating: false,
                 pinned: true,
@@ -49,7 +52,7 @@ class _ProfileState extends State<Profile> {
                 flexibleSpace: FlexibleSpaceBar(
                     background: Image.network(
                   Provider.of<UserModel>(context).bannerImageUrl ?? '',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitWidth,
                 )),
               ),
               SliverList(
@@ -57,6 +60,7 @@ class _ProfileState extends State<Profile> {
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                   child: Column(children: [
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -92,8 +96,7 @@ class _ProfileState extends State<Profile> {
           },
           body: ListPosts(),
         ),
-      )
-          ),
+      )),
     );
   }
 }

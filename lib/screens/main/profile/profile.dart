@@ -30,12 +30,12 @@ class _ProfileState extends State<Profile> {
               initialData: null),
           initialData: const [],
         ),
-        StreamProvider.value(
-          value: _userService.getUserInfo(
-              FirebaseAuth.instance.currentUser?.uid,
-              initialData: null),
-          initialData: const [],
-        ),
+        // StreamProvider.value(
+        //   value: _userService.getUserInfo(
+        //       FirebaseAuth.instance.currentUser?.uid,
+        //       initialData: null),
+        //   initialData: const [],
+        // ),
       ],
       child: Scaffold(
           // body: Text(Provider.of<UserModel>(context).profileImageUrl),
